@@ -1,7 +1,32 @@
-<h1>
-  {{title}}
-</h1>
+<div *ngIf="!currentUser.id">
+    <h1>
+        Welcome to elite chat
+    </h1>
+    <input type="text" [(ngModel)]="currentUser.name" placeholder="My name is...">
+    <button (click)="startChatting()">Start chatting</button>
+</div>
 
-<input type="text" [(ngModel)]="name" placeholder="My name is...">
-<button>Save</button>
+<div *ngIf="currentUser.id">
+    <ul class="users">
+        <li *ngFor="let user of users">
+            <span class="badge">{{user.id}}</span> {{user.name}}
+        </li>
+    </ul>
+    <div>
+        <ul class="messages">
+            <li *ngFor="let message of chat.messages">
+                <span *ngIf="message.fromUserId == currentUser.id" class="message-sent-by-me">{{message.content}}</span>
+                <span *ngIf="message.fromUserId != currentUser.id" class="message-sent-by-partner">{{message.content}}</span>
+            </li>
+        </ul>
 
+        <div>
+            <input type="text" [(ngModel)]="message">
+            <button (click)="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<!--<pre>-->
+    <!--{{ users | json }}-->
+<!--</pre>-->
