@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 
 const USERS: User[] = [
-  { id: 11, name: 'Mr. Nice', username: 'xpto', chat: {messages: []} },
-  { id: 12, name: 'Narco', username: 'xpto', chat: {messages: []} },
-  { id: 13, name: 'Bombasto', username: 'xpto', chat: {messages: []} },
-  { id: 14, name: 'Celeritas', username: 'xpto', chat: {messages: []} },
-  { id: 15, name: 'Magneta', username: 'xpto', chat: {messages: []} },
-  { id: 16, name: 'RubberMan', username: 'xpto', chat: {messages: []} }
+  { id: 11, name: 'Mr. Nice', chat: {messages: []} },
+  { id: 12, name: 'Narco', chat: {messages: []} },
+  { id: 13, name: 'Bombasto', chat: {messages: []} },
+  { id: 14, name: 'Celeritas', chat: {messages: []} },
+  { id: 15, name: 'Magneta', chat: {messages: []} },
+  { id: 16, name: 'RubberMan', chat: {messages: []} }
 ];
 
 const MESSAGES: Message[] = [
-  { content: 'Hello!', fromUserId: 1, toUserId: 12},
-  { content: 'How you doing??', fromUserId: 1, toUserId: 12},
-  { content: 'Good morning! I am doing great, I am at the airport now, traveling to Barcelona.', fromUserId: 12, toUserId: 1},
-  { content: 'Cool! So it worked out uh?! Enjoy your holidays', fromUserId: 1, toUserId: 12},
-  { content: 'I will see you next week!', fromUserId: 12, toUserId: 1}
+  { content: 'Hello!', fromUserId: 1, toUserId: 12, sentAt: null, isRead: false },
+  { content: 'How you doing??', fromUserId: 1, toUserId: 12, sentAt: null, isRead: false },
+  { content: 'Good morning! I am doing great, I am at the airport now, traveling to Barcelona.', fromUserId: 12, toUserId: 1, sentAt: null, isRead: false },
+  { content: 'Cool! So it worked out uh?! Enjoy your holidays', fromUserId: 1, toUserId: 12, sentAt: null, isRead: false },
+  { content: 'I will see you next week!', fromUserId: 12, toUserId: 1, sentAt: null, isRead: false }
 ];
 
 @Component({
@@ -50,7 +50,6 @@ export class AppComponent {
 class User {
   id: number;
   name: string;
-  username: string;
   chat: Chat = new Chat();
 }
 
@@ -62,4 +61,6 @@ class Message {
   content: string;
   fromUserId: number;
   toUserId: number;
+  sentAt: any;
+  isRead: boolean = false;
 }

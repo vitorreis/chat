@@ -1,7 +1,7 @@
 <div *ngIf="!currentUser.id">
     <md-toolbar color="primary">Elite Chat</md-toolbar>
     <md-input-container>
-        <input md-input placeholder="Name" [(ngModel)]="currentUser.name">
+        <input md-input placeholder="Name" [(ngModel)]="currentUser.name" autofocus>
     </md-input-container>
     <button (click)="startChatting()" md-button color="primary">
         Start chatting
@@ -12,22 +12,23 @@
     <md-grid-list cols="2">
         <md-grid-tile>
             <md-grid-tile-header class="md-primary">
-                Contacts
+                Connected contacts
             </md-grid-tile-header>
             <md-list>
-                <md-list-item *ngFor="let user of users" (click)="chattingWithUser=user" class="contact">{{user.name}}</md-list-item>
+                <md-list-item *ngFor="let user of users" (click)="chattingWithUser=user" class="contact">
+                    <h3 md-line>{{user.name}}</h3>
+                </md-list-item>
             </md-list>
         </md-grid-tile>
 
-        <md-grid-tile>
+        <md-grid-tile *ngIf="chattingWithUser.id">
             <md-grid-tile-header>
                 {{ chattingWithUser.name }}
             </md-grid-tile-header>
-
             <md-list class="messages">
                 <md-list-item *ngFor="let message of chattingWithUser.chat.messages">
-                    <span *ngIf="message.fromUserId == currentUser.id" class="message-sent-by-me">{{message.content}}</span>
-                    <span *ngIf="message.fromUserId != currentUser.id" class="message-sent-by-partner">{{message.content}}</span>
+                    <p *ngIf="message.fromUserId == currentUser.id" class="message-sent-by-me">{{message.content}}</p>
+                    <p *ngIf="message.fromUserId != currentUser.id" class="message-sent-by-partner">{{message.content}}</p>
                 </md-list-item>
             </md-list>
 
@@ -38,6 +39,10 @@
                 <button (click)="sendMessage()" md-button>Send</button>
             </md-grid-tile-footer>
 
+        </md-grid-tile>
+
+        <md-grid-tile *ngIf="!chattingWithUser.id">
+            Choose a contact and start chatting!
         </md-grid-tile>
 
     </md-grid-list>
