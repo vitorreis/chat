@@ -1,32 +1,44 @@
-<md-toolbar>Elite Chat</md-toolbar>
 <div *ngIf="!currentUser.id">
+    <md-toolbar color="primary">Elite Chat</md-toolbar>
     <md-input-container>
         <input md-input placeholder="Name" [(ngModel)]="currentUser.name">
     </md-input-container>
-    <button (click)="startChatting()" md-button>Start chatting</button>
+    <button (click)="startChatting()" md-button color="primary">
+        Start chatting
+    </button>
 </div>
 
 <div *ngIf="currentUser.id">
-    <ul class="users">
-        <li *ngFor="let user of users">
-            <span class="badge">{{user.id}}</span> {{user.name}}
-        </li>
-    </ul>
-    <div>
-        <ul class="messages">
-            <li *ngFor="let message of chat.messages">
-                <span *ngIf="message.fromUserId == currentUser.id" class="message-sent-by-me">{{message.content}}</span>
-                <span *ngIf="message.fromUserId != currentUser.id" class="message-sent-by-partner">{{message.content}}</span>
-            </li>
-        </ul>
+    <md-grid-list cols="2">
+        <md-grid-tile>
+            <md-grid-tile-header class="md-primary">
+                Contacts
+            </md-grid-tile-header>
+            <md-list>
+                <md-list-item *ngFor="let user of users" (click)="chattingWithUser=user" class="contact">{{user.name}}</md-list-item>
+            </md-list>
+        </md-grid-tile>
 
-        <div>
-            <input type="text" [(ngModel)]="message">
-            <button (click)="sendMessage()">Send</button>
-        </div>
-    </div>
+        <md-grid-tile>
+            <md-grid-tile-header>
+                {{ chattingWithUser.name }}
+            </md-grid-tile-header>
+
+            <md-list class="messages">
+                <md-list-item *ngFor="let message of chattingWithUser.chat.messages">
+                    <span *ngIf="message.fromUserId == currentUser.id" class="message-sent-by-me">{{message.content}}</span>
+                    <span *ngIf="message.fromUserId != currentUser.id" class="message-sent-by-partner">{{message.content}}</span>
+                </md-list-item>
+            </md-list>
+
+            <md-grid-tile-footer>
+                <md-input-container>
+                    <input md-input [(ngModel)]="message">
+                </md-input-container>
+                <button (click)="sendMessage()" md-button>Send</button>
+            </md-grid-tile-footer>
+
+        </md-grid-tile>
+
+    </md-grid-list>
 </div>
-
-<!--<pre>-->
-    <!--{{ users | json }}-->
-<!--</pre>-->
