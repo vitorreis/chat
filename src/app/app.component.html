@@ -1,9 +1,9 @@
+<md-toolbar>Elite Chat</md-toolbar>
 <div *ngIf="!currentUser.id">
-    <h1>
-        Welcome to elite chat
-    </h1>
-    <input type="text" [(ngModel)]="currentUser.name" placeholder="My name is...">
-    <button (click)="startChatting()">Start chatting</button>
+    <md-input-container>
+        <input md-input placeholder="Name" [(ngModel)]="currentUser.name">
+    </md-input-container>
+    <button (click)="startChatting()" md-button>Start chatting</button>
 </div>
 
 <div *ngIf="currentUser.id">
