@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+var SockJS = require('sockjs-client');
+var Stomp = require('stompjs');
+
 const USERS: User[] = [
   { id: 11, name: 'Mr. Nice', chat: {messages: []} },
   { id: 12, name: 'Narco', chat: {messages: []} },
@@ -28,10 +31,12 @@ export class AppComponent {
   currentUser = new User();
   chattingWithUser = new User();
   message = '';
+  stompClient: any = null;
 
 
   startChatting(): void {
     this.currentUser.id = 1;
+    this.connect();
   }
 
   sendMessage() {
@@ -43,7 +48,24 @@ export class AppComponent {
 
       this.chattingWithUser.chat.messages.push(message);
       this.message = '';
+
+      this.stompClient.send("/app/chat", {}, JSON.stringify({ 'content': "kitica", 'sentBy': "Vitor" }))
     }
+  }
+
+  connect() {
+    let socket = new SockJS('http://localhost:8080/gs-guide-websocket/');
+
+    this.stompClient = Stomp.over(socket);
+    console.log('Stomp', Stomp);
+    console.log('Stomp client', this.stompClient);
+    this.stompClient.connect({}, (frame) => {
+      console.log('Connected: ' + frame);
+      this.stompClient.subscribe('/topic/public-chat', (greeting: any) => {
+        console.log(greeting);
+        //showGreeting(JSON.parse(greeting.body).content);
+      });
+    });
   }
 }
 

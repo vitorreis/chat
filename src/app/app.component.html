@@ -1,10 +1,13 @@
 <div *ngIf="!currentUser.id">
-    <md-toolbar color="primary">Elite Chat</md-toolbar>
+    <md-toolbar color="primary">Chat</md-toolbar>
     <md-input-container>
         <input md-input placeholder="Name" [(ngModel)]="currentUser.name" autofocus>
     </md-input-container>
+    <md-input-container>
+        <input md-input placeholder="Message" [(ngModel)]="message">
+    </md-input-container>
     <button (click)="startChatting()" md-button color="primary">
-        Start chatting
+        Send message
     </button>
 </div>
 
