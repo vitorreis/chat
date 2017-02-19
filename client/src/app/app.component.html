@@ -2,7 +2,7 @@
 
 <div *ngIf="!isChatOpen">
     <md-input-container>
-        <input md-input placeholder="Name" [(ngModel)]="currentUser.name" autofocus>
+        <input md-input placeholder="Name" [(ngModel)]="currentUser.name" (keyup.enter)="startChatting()" autofocus>
     </md-input-container>
     <button (click)="startChatting()" md-button color="primary">
         Save name
@@ -11,7 +11,7 @@
 
 <div *ngIf="isChatOpen">
     <md-input-container>
-        <input md-input placeholder="Message" [(ngModel)]="message">
+        <input md-input placeholder="Message" [(ngModel)]="message" (keyup.enter)="sendMessage()" autofocus>
     </md-input-container>
     <button (click)="sendMessage()" md-button color="primary">
         Send message
@@ -26,7 +26,7 @@
         <md-list-item *ngFor="let message of messageHistory">
             <md-icon md-list-avatar>{{ message.sentBy }}</md-icon>
             <h4 md-line>{{ message.content }}</h4>
-            <span md-line class="message-time">{{ message.sentAt.hour }}:{{ message.sentAt.minute }}</span>
+            <span md-line class="message-time">{{ message.sentAt | date:'shortTime' }}</span>
         </md-list-item>
     </md-list>
 </md-card>

@@ -53,5 +53,10 @@ class User {
 class Message {
   content: string;
   sentBy: string;
-  sentAt: any;
+  sentAt: string;
+  getFormattedTime(): string {
+    let date = new Date(this.sentAt);
+
+    return date.getHours() + ':' + date.getMinutes();
+  }
 }

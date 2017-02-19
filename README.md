@@ -17,6 +17,7 @@ Dependencies:
  
 Steps to run it:
 - `npm start`
+- Open it in the browser `http://localhost:4200`
 
 
 
