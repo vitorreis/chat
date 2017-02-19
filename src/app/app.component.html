@@ -18,51 +18,15 @@
     </button>
 </div>
 
-<md-list *ngIf="isChatOpen">
-    <h3 md-subheader>Messages</h3>
-    <md-list-item *ngFor="let message of messageHistory">
-        <md-icon md-list-avatar>{{ message.sentBy }}</md-icon>
-        <h4 md-line>{{ message.content }}</h4>
-    </md-list-item>
-    <!--<md-divider></md-divider>-->
-</md-list>
-
-<div *ngIf="currentUser.id">
-    <md-grid-list cols="2">
-        <md-grid-tile>
-            <md-grid-tile-header class="md-primary">
-                Connected contacts
-            </md-grid-tile-header>
-            <md-list>
-                <md-list-item *ngFor="let user of users" (click)="chattingWithUser=user" class="contact">
-                    <h3 md-line>{{user.name}}</h3>
-                </md-list-item>
-            </md-list>
-        </md-grid-tile>
-
-        <md-grid-tile *ngIf="chattingWithUser.id">
-            <md-grid-tile-header>
-                {{ chattingWithUser.name }}
-            </md-grid-tile-header>
-            <md-list class="messages">
-                <md-list-item *ngFor="let message of chattingWithUser.chat.messages">
-                    <p *ngIf="message.fromUserId == currentUser.id" class="message-sent-by-me">{{message.content}}</p>
-                    <p *ngIf="message.fromUserId != currentUser.id" class="message-sent-by-partner">{{message.content}}</p>
-                </md-list-item>
-            </md-list>
-
-            <md-grid-tile-footer>
-                <md-input-container>
-                    <input md-input [(ngModel)]="message">
-                </md-input-container>
-                <button (click)="sendMessage()" md-button>Send</button>
-            </md-grid-tile-footer>
-
-        </md-grid-tile>
-
-        <md-grid-tile *ngIf="!chattingWithUser.id">
-            Choose a contact and start chatting!
-        </md-grid-tile>
-
-    </md-grid-list>
-</div>
+<md-card *ngIf="isChatOpen">
+    <md-card-header>
+        Messages
+    </md-card-header>
+    <md-list>
+        <md-list-item *ngFor="let message of messageHistory">
+            <md-icon md-list-avatar>{{ message.sentBy }}</md-icon>
+            <h4 md-line>{{ message.content }}</h4>
+            <span md-line class="message-time">{{ message.sentAt.hour }}:{{ message.sentAt.minute }}</span>
+        </md-list-item>
+    </md-list>
+</md-card>

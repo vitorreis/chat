@@ -10,7 +10,6 @@ var Stomp = require('stompjs');
 })
 export class AppComponent {
   isChatOpen = false;
-  title = 'Welcome to elite chat!';
   currentUser = new User();
   message = '';
   stompClient: any = null;
@@ -31,19 +30,16 @@ export class AppComponent {
     }
   }
 
-  connect() {
+  private connect() {
     let socket = new SockJS('http://localhost:8080/gs-guide-websocket/');
 
     this.stompClient = Stomp.over(socket);
-    console.log('Stomp', Stomp);
-    console.log('Stomp client', this.stompClient);
     this.stompClient.connect({}, (frame) => {
       console.log('Connected: ' + frame);
       this.isChatOpen = true;
       this.stompClient.subscribe('/topic/public-chat', (messageCommand: any) => {
-        console.log(JSON.parse(messageCommand.body));
         let message = JSON.parse(messageCommand.body);
-        this.messageHistory.push(message);
+        this.messageHistory.splice(0, 0, message);
       });
     });
   }
@@ -57,7 +53,5 @@ class User {
 class Message {
   content: string;
   sentBy: string;
-  toUserId: number;
   sentAt: any;
-  isRead: boolean = false;
 }
